@@ -1,0 +1,618 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Futebol - Sports News</title>
+  
+  <!-- Fonte Google: Roboto -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link 
+    href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" 
+    rel="stylesheet"
+  >
+
+  <style>
+    /* RESET */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    body {
+      font-family: 'Roboto', sans-serif;
+      background-color: #f0f0f0;
+      color: #333;
+      padding-top: 120px; /* Espaço para as barras fixas */
+    }
+    a {
+      text-decoration: none;
+      color: inherit;
+    }
+    ul {
+      list-style: none;
+    }
+
+    /* CORES PRIMÁRIAS */
+    :root {
+      --espn-red: #D50A2C;
+      --dark-gray: #1E1E1E;
+      --light-gray: #f0f0f0;
+      --text-color: #333;
+      --white: #fff;
+    }
+
+    /* CONTAINER GERAL */
+    .container {
+      width: 90%;
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 20px;
+    }
+
+    /* BARRA SUPERIOR (TOPO) - Nome do Site */
+    .top-bar {
+      background-color: var(--dark-gray);
+      color: var(--white);
+      padding: 10px 0;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      z-index: 1000;
+    }
+    .top-bar .container {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .top-bar .logo h1 {
+      font-size: 1.5rem;
+      font-weight: 700;
+    }
+    .top-bar .logo h1 span {
+      color: var(--espn-red);
+    }
+    .top-bar .contact a {
+      color: var(--white);
+      font-size: 0.9rem;
+      padding: 6px 12px;
+      border: 1px solid var(--white);
+      border-radius: 4px;
+      transition: background-color 0.3s;
+    }
+    .top-bar .contact a:hover {
+      background-color: var(--espn-red);
+      border-color: var(--espn-red);
+    }
+
+    /* MENU DE CATEGORIAS */
+    nav.main-nav {
+      background-color: var(--espn-red);
+      position: fixed;
+      top: 48px; /* Logo abaixo da top-bar */
+      left: 0;
+      width: 100%;
+      z-index: 999;
+    }
+    nav.main-nav .container {
+      display: flex;
+      justify-content: center;
+      padding: 0 10px;
+    }
+    nav.main-nav ul {
+      display: flex;
+      flex-wrap: wrap;
+    }
+    nav.main-nav li {
+      margin: 0;
+      position: relative;
+    }
+    nav.main-nav li + li {
+      margin-left: 15px;
+      padding-left: 15px;
+      border-left: 1px solid var(--white);
+    }
+    nav.main-nav a {
+      color: var(--white);
+      font-weight: 500;
+      font-size: 1rem;
+      padding: 15px 0;
+      display: block;
+      transition: color 0.3s;
+    }
+    nav.main-nav a:hover {
+      color: var(--dark-gray);
+    }
+
+    /* SEÇÃO HERO - Destaque da Categoria */
+    .hero {
+      background-color: #fff;
+      margin-top: 10px;
+      padding: 20px 0;
+      border-bottom: 1px solid #ccc;
+    }
+    .hero .container {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      gap: 20px;
+    }
+    .hero-content {
+      flex: 1 1 60%;
+    }
+    .hero-content h2 {
+      font-size: 2rem;
+      margin-bottom: 10px;
+      color: #000;
+    }
+    .hero-content p {
+      font-size: 1rem;
+      line-height: 1.5;
+      margin-bottom: 15px;
+    }
+    .hero-content a {
+      display: inline-block;
+      background-color: var(--espn-red);
+      color: #fff;
+      padding: 10px 20px;
+      border-radius: 4px;
+      font-weight: 500;
+      transition: background-color 0.3s;
+    }
+    .hero-content a:hover {
+      background-color: #b00927;
+    }
+    .hero-video {
+      flex: 1 1 35%;
+      background-color: #000;
+      position: relative;
+      border-radius: 6px;
+      overflow: hidden;
+      aspect-ratio: 16 / 9;
+      min-width: 280px;
+    }
+    .hero-video iframe,
+    .hero-video video {
+      width: 100%;
+      height: 100%;
+      display: block;
+    }
+
+    /* CONTEÚDO PRINCIPAL */
+    main.container {
+      display: flex;
+      flex-wrap: wrap;
+      margin: 30px auto;
+      gap: 20px;
+    }
+    /* COLUNA PRINCIPAL */
+    .main-content {
+      flex: 1 1 100%;
+    }
+    /* SEÇÃO DE NOTÍCIAS */
+    .featured-news {
+      background-color: #fff;
+      border: 1px solid #ddd;
+      border-radius: 6px;
+      padding: 20px;
+      /* Removido margin-bottom para eliminar espaço vazio abaixo */
+    }
+    .news-grid {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 20px;
+    }
+    .news-item {
+      flex: 1 1 calc(50% - 10px);
+      background: #fff;
+      border: 1px solid #eee;
+      border-radius: 6px;
+      overflow: hidden;
+      transition: box-shadow 0.3s;
+      display: flex;
+      flex-direction: column;
+    }
+    .news-item:hover {
+      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    }
+    .news-thumb {
+      width: 100%;
+      height: 160px;
+      background-size: cover;
+      background-position: center;
+    }
+    .news-content {
+      padding: 10px;
+    }
+    .news-content span {
+      display: inline-block;
+      font-size: 0.75rem;
+      font-weight: 700;
+      color: #257A47;
+      margin-bottom: 6px;
+    }
+    .news-content h4 {
+      font-size: 1.1rem;
+      margin-bottom: 8px;
+      color: #000;
+      line-height: 1.3;
+    }
+    .news-content h4:hover {
+      color: var(--espn-red);
+    }
+    .news-content p {
+      font-size: 0.9rem;
+      line-height: 1.4;
+      margin-bottom: 8px;
+    }
+
+    /* SIDEBAR */
+    .sidebar {
+      flex: 1 1 28%;
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+    }
+    .widget {
+      background: #fff;
+      border: 1px solid #ddd;
+      border-radius: 6px;
+      padding: 15px;
+    }
+    .widget h4 {
+      margin-bottom: 10px;
+      font-size: 1.1rem;
+      color: var(--espn-red);
+    }
+    .widget p {
+      font-size: 0.95rem;
+      line-height: 1.5;
+    }
+    /* Exemplo de Banner */
+    .banner {
+      background-image: url('https://via.placeholder.com/300x100/000/fff?text=Banner');
+      background-repeat: no-repeat;
+      background-size: cover;
+      width: 100%;
+      border-radius: 6px;
+      min-height: 100px;
+    }
+
+    /* RODAPÉ */
+    footer {
+      background-color: var(--dark-gray);
+      color: var(--white);
+      padding: 20px 0;
+      margin-top: 40px;
+    }
+    footer .container {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      gap: 20px;
+    }
+    .footer-logo img {
+      max-height: 40px;
+    }
+    .footer-links ul {
+      display: flex;
+      gap: 15px;
+    }
+    .footer-links a {
+      color: var(--white);
+      font-size: 0.9rem;
+      transition: color 0.3s;
+    }
+    .footer-links a:hover {
+      color: var(--espn-red);
+    }
+    .social-media a {
+      margin-left: 10px;
+      transition: opacity 0.3s;
+    }
+    .social-media a:hover {
+      opacity: 0.7;
+    }
+    .footer-bottom {
+      margin-top: 10px;
+      text-align: center;
+      font-size: 0.8rem;
+    }
+
+    /* RESPONSIVIDADE */
+    @media (max-width: 992px) {
+      nav.main-nav ul {
+        justify-content: center;
+      }
+      .hero .container {
+        flex-direction: column;
+      }
+      .hero-content, .hero-video {
+        flex: 1 1 100%;
+      }
+      main.container {
+        flex-direction: column;
+      }
+      .main-content, .sidebar {
+        flex: 1 1 100%;
+        max-width: 100%;
+      }
+    }
+  </style>
+</head>
+<body>
+  <!-- Barra Superior (Nome do Site) -->
+  <div class="top-bar">
+    <div class="container">
+      <div class="logo">
+        <h1><a href="CudoJonas.html"><span>Sports</span> News</a></h1>
+      </div>
+      <div class="contact">
+        <a href="#">Assine Já</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- Menu de Categorias -->
+  <nav class="main-nav">
+    <div class="container">
+      <ul>
+        <li><a href="Futebol.html">Football</a></li>
+        <li><a href="Basquete.html">Basketball</a></li>
+        <li><a href="Baseball.html">Baseball</a></li>
+        <li><a href="Hoquei.html">Hockey</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <!-- Seção Hero - Destaque da Categoria Futebol -->
+  <section class="hero">
+    <div class="container">
+      <div class="hero-content">
+        <h2>Destaque: Vitória emocionante do time X</h2>
+        <p>Confira os melhores momentos do jogo e análises da partida que virou a temporada!</p>
+        <a href="#">Leia Mais</a>
+      </div>
+      <div class="hero-video">
+        <!-- Exemplo de vídeo incorporado -->
+        <iframe 
+          src="https://www.youtube.com/embed/4Dr5PPhgoas" 
+          frameborder="0" 
+          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+          allowfullscreen>
+        </iframe>
+      </div>
+    </div>
+  </section>
+
+  <!-- Conteúdo Principal -->
+  <main class="container">
+    <!-- Coluna Principal: Notícias de Futebol -->
+    <section class="main-content">
+      <div class="featured-news">
+        <h3>Notícias de Futebol</h3>
+        <div class="news-grid">
+          <!-- Gerando 20 itens de notícia (10 linhas com 2 colunas cada) -->
+          <!-- Notícia 1 -->
+          <div class="news-item">
+            <div class="news-thumb" style="background-image: url('https://via.placeholder.com/400x200/004d00/fff?text=Futebol+1');"></div>
+            <div class="news-content">
+              <span>Transferências</span>
+              <h4><a href="#">Negociação surpreendente 1</a></h4>
+              <p>Detalhes sobre a negociação do time.</p>
+            </div>
+          </div>
+          <!-- Notícia 2 -->
+          <div class="news-item">
+            <div class="news-thumb" style="background-image: url('https://via.placeholder.com/400x200/003366/fff?text=Futebol+2');"></div>
+            <div class="news-content">
+              <span>Resultados</span>
+              <h4><a href="#">Vitória épica 2</a></h4>
+              <p>Resumo do jogo com jogadas decisivas.</p>
+            </div>
+          </div>
+          <!-- Notícia 3 -->
+          <div class="news-item">
+            <div class="news-thumb" style="background-image: url('https://via.placeholder.com/400x200/990000/fff?text=Futebol+3');"></div>
+            <div class="news-content">
+              <span>Análise</span>
+              <h4><a href="#">Táticas inovadoras 3</a></h4>
+              <p>Análise das estratégias do técnico.</p>
+            </div>
+          </div>
+          <!-- Notícia 4 -->
+          <div class="news-item">
+            <div class="news-thumb" style="background-image: url('https://via.placeholder.com/400x200/cc0000/fff?text=Futebol+4');"></div>
+            <div class="news-content">
+              <span>Entrevista</span>
+              <h4><a href="#">Entrevista exclusiva 4</a></h4>
+              <p>O craque fala sobre a temporada.</p>
+            </div>
+          </div>
+          <!-- Notícia 5 -->
+          <div class="news-item">
+            <div class="news-thumb" style="background-image: url('https://via.placeholder.com/400x200/005500/fff?text=Futebol+5');"></div>
+            <div class="news-content">
+              <span>Transferências</span>
+              <h4><a href="#">Movimentação no mercado 5</a></h4>
+              <p>Novos reforços para o time.</p>
+            </div>
+          </div>
+          <!-- Notícia 6 -->
+          <div class="news-item">
+            <div class="news-thumb" style="background-image: url('https://via.placeholder.com/400x200/006600/fff?text=Futebol+6');"></div>
+            <div class="news-content">
+              <span>Resultados</span>
+              <h4><a href="#">Jogo acirrado 6</a></h4>
+              <p>Confronto que definiu o campeonato.</p>
+            </div>
+          </div>
+          <!-- Notícia 7 -->
+          <div class="news-item">
+            <div class="news-thumb" style="background-image: url('https://via.placeholder.com/400x200/007700/fff?text=Futebol+7');"></div>
+            <div class="news-content">
+              <span>Análise</span>
+              <h4><a href="#">Estratégias vencedoras 7</a></h4>
+              <p>Como o time se destacou taticamente.</p>
+            </div>
+          </div>
+          <!-- Notícia 8 -->
+          <div class="news-item">
+            <div class="news-thumb" style="background-image: url('https://via.placeholder.com/400x200/008800/fff?text=Futebol+8');"></div>
+            <div class="news-content">
+              <span>Entrevista</span>
+              <h4><a href="#">Bastidores revelados 8</a></h4>
+              <p>Depoimento exclusivo do jogador.</p>
+            </div>
+          </div>
+          <!-- Notícia 9 -->
+          <div class="news-item">
+            <div class="news-thumb" style="background-image: url('https://via.placeholder.com/400x200/009900/fff?text=Futebol+9');"></div>
+            <div class="news-content">
+              <span>Transferências</span>
+              <h4><a href="#">Movimentação inesperada 9</a></h4>
+              <p>Detalhes sobre a última negociação.</p>
+            </div>
+          </div>
+          <!-- Notícia 10 -->
+          <div class="news-item">
+            <div class="news-thumb" style="background-image: url('https://via.placeholder.com/400x200/00aa00/fff?text=Futebol+10');"></div>
+            <div class="news-content">
+              <span>Resultados</span>
+              <h4><a href="#">Placar surpreendente 10</a></h4>
+              <p>Resumo do jogo decisivo.</p>
+            </div>
+          </div>
+          <!-- Notícia 11 -->
+          <div class="news-item">
+            <div class="news-thumb" style="background-image: url('https://via.placeholder.com/400x200/00bb00/fff?text=Futebol+11');"></div>
+            <div class="news-content">
+              <span>Análise</span>
+              <h4><a href="#">Táticas modernas 11</a></h4>
+              <p>Discussão sobre as novas estratégias.</p>
+            </div>
+          </div>
+          <!-- Notícia 12 -->
+          <div class="news-item">
+            <div class="news-thumb" style="background-image: url('https://via.placeholder.com/400x200/00cc00/fff?text=Futebol+12');"></div>
+            <div class="news-content">
+              <span>Entrevista</span>
+              <h4><a href="#">Conversa com o técnico 12</a></h4>
+              <p>O treinador fala sobre a temporada.</p>
+            </div>
+          </div>
+          <!-- Notícia 13 -->
+          <div class="news-item">
+            <div class="news-thumb" style="background-image: url('https://via.placeholder.com/400x200/00dd00/fff?text=Futebol+13');"></div>
+            <div class="news-content">
+              <span>Transferências</span>
+              <h4><a href="#">Novo reforço 13</a></h4>
+              <p>Confirmação de contratação inesperada.</p>
+            </div>
+          </div>
+          <!-- Notícia 14 -->
+          <div class="news-item">
+            <div class="news-thumb" style="background-image: url('https://via.placeholder.com/400x200/00ee00/fff?text=Futebol+14');"></div>
+            <div class="news-content">
+              <span>Resultados</span>
+              <h4><a href="#">Jogo eletrizante 14</a></h4>
+              <p>Relato completo de um duelo acirrado.</p>
+            </div>
+          </div>
+          <!-- Notícia 15 -->
+          <div class="news-item">
+            <div class="news-thumb" style="background-image: url('https://via.placeholder.com/400x200/00ff00/fff?text=Futebol+15');"></div>
+            <div class="news-content">
+              <span>Análise</span>
+              <h4><a href="#">Desempenho tático 15</a></h4>
+              <p>Análise detalhada da partida.</p>
+            </div>
+          </div>
+          <!-- Notícia 16 -->
+          <div class="news-item">
+            <div class="news-thumb" style="background-image: url('https://via.placeholder.com/400x200/11ff11/fff?text=Futebol+16');"></div>
+            <div class="news-content">
+              <span>Entrevista</span>
+              <h4><a href="#">Bate-papo com o craque 16</a></h4>
+              <p>Depoimento exclusivo após o jogo.</p>
+            </div>
+          </div>
+          <!-- Notícia 17 -->
+          <div class="news-item">
+            <div class="news-thumb" style="background-image: url('https://via.placeholder.com/400x200/22ff22/fff?text=Futebol+17');"></div>
+            <div class="news-content">
+              <span>Transferências</span>
+              <h4><a href="#">Negócio fechado 17</a></h4>
+              <p>Informações sobre a última negociação.</p>
+            </div>
+          </div>
+          <!-- Notícia 18 -->
+          <div class="news-item">
+            <div class="news-thumb" style="background-image: url('https://via.placeholder.com/400x200/33ff33/fff?text=Futebol+18');"></div>
+            <div class="news-content">
+              <span>Resultados</span>
+              <h4><a href="#">Placar impressionante 18</a></h4>
+              <p>Resumo de um jogo memorável.</p>
+            </div>
+          </div>
+          <!-- Notícia 19 -->
+          <div class="news-item">
+            <div class="news-thumb" style="background-image: url('https://via.placeholder.com/400x200/44ff44/fff?text=Futebol+19');"></div>
+            <div class="news-content">
+              <span>Análise</span>
+              <h4><a href="#">Estratégia vencedora 19</a></h4>
+              <p>Análise dos pontos fortes do time.</p>
+            </div>
+          </div>
+          <!-- Notícia 20 -->
+          <div class="news-item">
+            <div class="news-thumb" style="background-image: url('https://via.placeholder.com/400x200/55ff55/fff?text=Futebol+20');"></div>
+            <div class="news-content">
+              <span>Entrevista</span>
+              <h4><a href="#">Conversas de bastidores 20</a></h4>
+              <p>Depoimento exclusivo sobre os desafios da temporada.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Barra Lateral: Widgets -->
+    <aside class="sidebar">
+      <!-- Widget: Banner -->
+      <div class="banner"></div>
+    </aside>
+  </main>
+
+  <!-- Rodapé -->
+  <footer>
+    <div class="container">
+      <div class="footer-logo">
+        <img src="https://via.placeholder.com/120x40/000/fff?text=Logo" alt="Sports News">
+      </div>
+      <div class="footer-links">
+        <ul>
+          <li><a href="#">Sobre Nós</a></li>
+          <li><a href="#">Contato</a></li>
+          <li><a href="#">Publicidade</a></li>
+          <li><a href="#">Política de Privacidade</a></li>
+        </ul>
+      </div>
+      <div class="social-media">
+        <a href="#"><img src="https://via.placeholder.com/24x24/fff/000?text=F" alt="Facebook"></a>
+        <a href="#"><img src="https://via.placeholder.com/24x24/fff/000?text=T" alt="Twitter"></a>
+        <a href="#"><img src="https://via.placeholder.com/24x24/fff/000?text=I" alt="Instagram"></a>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <div class="container">
+        <p>&copy; 2025 Sports News. Todos os direitos reservados.</p>
+      </div>
+    </div>
+  </footer>
+</body>
+</html>
