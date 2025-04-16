@@ -1,0 +1,14 @@
+<div class="container-content">
+    <h2>{{ categoria|title }}</h2>
+    <div class="news-grid">
+      {% for noticia in noticias %}
+        <div class="news-item">
+          <div class="card-noticia">
+            <img src="{{ noticia.imagem_url }}" alt="{{ noticia.titulo }}">
+            <div class="titulo-noticia">{{ noticia.titulo }}</div>
+            <div class="descricao-noticia">{{ noticia.descricao }}</div>
+          </div>
+        </div>
+      {% endfor %}
+    </div>
+  </div>

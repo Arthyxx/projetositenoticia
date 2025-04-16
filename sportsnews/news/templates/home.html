@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+
+{% block title %}Início - Sports News{% endblock %}
+
+{% block content %}
+<div class="container-content">
+  <div id="destaque" class="destaque">
+    <div class="destaque-text">
+      <h3>{{ noticias.first.titulo }}</h3>
+      <p>{{ noticias.first.descricao }}</p>
+    </div>
+    <img src="{{ noticias.first.imagem_url }}" alt="Imagem Destaque">
+  </div>
+
+  <div class="divider"><span>Notícias</span></div>
+
+  <div class="news-grid">
+    {% for noticia in noticias %}
+      <div class="news-item">
+        <div class="card-noticia">
+          <img src="{{ noticia.imagem_url }}" alt="{{ noticia.titulo }}">
+          <div class="titulo-noticia">{{ noticia.titulo }}</div>
+          <div class="descricao-noticia">{{ noticia.descricao }}</div>
+        </div>
+      </div>
+    {% endfor %}
+  </div>
+</div>
+{% endblock %}
