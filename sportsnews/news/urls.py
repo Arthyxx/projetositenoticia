@@ -2,6 +2,8 @@ from django.urls import path
 from . import views
 from django.contrib.auth.views import LogoutView
 from django.contrib.auth import views as auth_views
+from django.conf import settings
+from django.conf.urls.static import static
 
 urlpatterns = [
     path('', views.home, name='home'),
@@ -12,4 +14,8 @@ urlpatterns = [
     path('add/', views.add_noticia, name='add_noticia'),
     path('editar/<int:id>/', views.editar_noticia, name='editar_noticia'),
     path('excluir/<int:id>/', views.excluir_noticia, name='excluir_noticia'),
+    path('noticia/<int:pk>/', views.noticia, name='noticia'),  # Rota para página de notícia completa
 ]
+
+if settings.DEBUG:
+    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

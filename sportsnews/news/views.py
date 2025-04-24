@@ -6,11 +6,16 @@ from .forms import NoticiaForm
 
 def home(request):
     noticias = Noticia.objects.all()
-    return render(request, 'home.html', {'noticias': noticias})
+    categorias = Noticia.categoria_choices
+    return render(request, 'home.html', {'noticias': noticias, 'categorias': categorias})
 
 def categoria(request, categoria):
-    noticias = Noticia.objects.filter(categoria=categoria)
+    noticias = Noticia.objects.filter(categoria=categoria).order_by('-data_publicacao')
     return render(request, 'categoria.html', {'noticias': noticias, 'categoria': categoria})
+
+def noticia(request,pk):
+    noticia = get_object_or_404(Noticia, pk=pk)
+    return render(request, 'noticia.html', {'noticia': noticia})
 
 def login_view(request):
     if request.method == 'POST':

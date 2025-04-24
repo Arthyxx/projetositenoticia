@@ -9,7 +9,8 @@
       <h3>{{ noticias.first.titulo }}</h3>
       <p>{{ noticias.first.descricao }}</p>
     </div>
-    <img src="{{ noticias.first.imagem_url }}" alt="Imagem Destaque">
+    <!-- Corrigido para acessar o campo imagem -->
+    <img src="{{ noticias.first.imagem.url }}" alt="Imagem Destaque">
   </div>
 
   <div class="divider"><span>Notícias</span></div>
@@ -18,7 +19,8 @@
     {% for noticia in noticias %}
       <div class="news-item">
         <div class="card-noticia">
-          <img src="{{ noticia.imagem_url }}" alt="{{ noticia.titulo }}">
+          <!-- Corrigido para acessar o campo imagem -->
+          <img src="{{ noticia.imagem.url }}" alt="{{ noticia.titulo }}">
           <div class="titulo-noticia">{{ noticia.titulo }}</div>
           <div class="descricao-noticia">{{ noticia.descricao }}</div>
         </div>

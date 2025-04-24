@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+
+{% block title %}{{ noticia.titulo }} - Sports News{% endblock %}
+
+{% block content %}
+<div class="container-content">
+  <div class="noticia-completa">
+    <h2>{{ noticia.titulo }}</h2>
+    <img src="{{ noticia.imagem_url }}" alt="{{ noticia.titulo }}" class="img-fluid">
+    <p><strong>Categoria:</strong> {{ noticia.categoria|capfirst }}</p>
+    <p><strong>Publicado em:</strong> {{ noticia.data_publicacao|date:"d/m/Y H:i" }}</p>
+    <p>{{ noticia.descricao }}</p>
+  </div>
+</div>
+{% endblock %}
