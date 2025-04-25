@@ -38,8 +38,14 @@
         </ul>
 
         {% if user.is_authenticated %}
-          <a href="{% url 'admin_dashboard' %}" class="btn btn-outline-light ml-auto mr-2">Painel Admin</a>
-          <a href="{% url 'logout' %}" class="btn btn-outline-light">Sair</a>
+          <!-- Botões "Painel Admin" e "Sair" juntos -->
+          <div class="ml-auto d-flex">
+            <a href="{% url 'admin_dashboard' %}" class="btn btn-outline-light mr-2">Painel Admin</a>
+            <form method="POST" action="{% url 'logout' %}">
+              {% csrf_token %}
+              <button type="submit" class="btn btn-outline-light">Sair</button>
+            </form>
+          </div>
         {% else %}
           <button id="btnAdminToggle" class="btn btn-outline-light ml-auto" data-toggle="modal" data-target="#loginModal">Admin Login</button>
         {% endif %}

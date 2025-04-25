@@ -12,10 +12,20 @@
         <div class="card-noticia">
           <!-- Exibir a imagem da notícia -->
           <img src="{{ noticia.imagem_url }}" alt="{{ noticia.titulo }}">
-          <div class="titulo-noticia">{{ noticia.titulo }}</div>
-          <div class="descricao-noticia">{{ noticia.descricao }}</div>
+          
+          <!-- Título da notícia com link para a página completa -->
+          <div class="titulo-noticia">
+            <a href="{% url 'noticia' noticia.pk %}">{{ noticia.titulo }}</a>
+          </div>
+          
+          <!-- Exibir somente uma parte da descrição (100 primeiros caracteres) -->
+          <div class="descricao-noticia">
+            {{ noticia.descricao|slice:":100" }}...
+          </div>
         </div>
       </div>
+    {% empty %}
+      <p>Nenhuma notícia disponível nesta categoria.</p>
     {% endfor %}
   </div>
 </div>

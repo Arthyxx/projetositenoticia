@@ -12,8 +12,8 @@ urlpatterns = [
     path('logout/', auth_views.LogoutView.as_view(), name='logout'),
     path('admin-dashboard/', views.admin_dashboard, name='admin_dashboard'),
     path('add/', views.add_noticia, name='add_noticia'),
-    path('editar/<int:id>/', views.editar_noticia, name='editar_noticia'),
-    path('excluir/<int:id>/', views.excluir_noticia, name='excluir_noticia'),
+    path('editar/<int:pk>/', views.editar_noticia, name='editar_noticia'),  # Ajuste de id para pk
+    path('excluir/<int:pk>/', views.excluir_noticia, name='excluir_noticia'),  # Ajuste de id para pk
     path('noticia/<int:pk>/', views.noticia, name='noticia'),  # Rota para página de notícia completa
 ]
 
