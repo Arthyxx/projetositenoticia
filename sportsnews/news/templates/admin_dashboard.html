@@ -1,0 +1,36 @@
+{% extends 'base.html' %}
+
+{% block title %}Painel Admin - Sports News{% endblock %}
+
+{% block content %}
+<div class="container mt-5">
+  <h2 class="mb-4">Painel do Administrador</h2>
+  <p>Bem-vindo, <strong>{{ user.username }}</strong>!</p>
+
+  <div class="mt-4">
+    <a href="{% url 'add_noticia' %}" class="btn btn-success mb-3">Adicionar Nova Notícia</a>
+    <h4>Notícias Cadastradas</h4>
+    <ul class="list-group">
+      {% for noticia in noticias %}
+        <li class="list-group-item d-flex justify-content-between align-items-center">
+          <div>
+            {{ noticia.titulo }}
+            {% if noticia.destaque %}
+              <span class="badge bg-success ms-2">Destaque</span>
+            {% endif %}
+          </div>
+          <div>
+            {% if not noticia.destaque %}
+              <a href="{% url 'destacar_noticia' noticia.id %}" class="btn btn-sm btn-info">Destacar</a>
+            {% endif %}
+            <a href="{% url 'editar_noticia' noticia.id %}" class="btn btn-sm btn-warning">Editar</a>
+            <a href="{% url 'excluir_noticia' noticia.id %}" class="btn btn-sm btn-danger">Excluir</a>
+          </div>
+        </li>
+      {% empty %}
+        <li class="list-group-item">Nenhuma notícia cadastrada ainda.</li>
+      {% endfor %}
+    </ul>
+  </div>
+</div>
+{% endblock %}

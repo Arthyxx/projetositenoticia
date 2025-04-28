@@ -1,0 +1,21 @@
+{% extends 'base.html' %}
+
+{% block content %}
+  <div class="container mt-5">
+    <h2>Editar Notícia</h2>
+    <form method="POST" enctype="multipart/form-data">
+        {% csrf_token %}
+        
+        <!-- Exibe o formulário de edição -->
+        {{ form.as_p }}
+
+        <!-- Se você quiser mostrar a imagem atual da notícia, pode fazer algo assim -->
+        <div class="form-group">
+            <label for="imagem_url">Imagem Atual:</label>
+            <img src="{{ noticia.imagem_url }}" alt="Imagem atual" width="200">
+        </div>
+
+        <button type="submit" class="btn btn-primary">Salvar alterações</button>
+    </form>
+  </div>
+{% endblock %}
