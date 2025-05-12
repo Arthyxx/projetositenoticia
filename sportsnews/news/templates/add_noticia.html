@@ -1,13 +1,25 @@
 {% extends 'base.html' %}
+{% load static %}
 {% block title %}Adicionar Notícia{% endblock %}
 
 {% block content %}
 <div class="container mt-5">
   <h2>Adicionar Nova Notícia</h2>
-  <form method="post" enctype="multipart/form-data">  <!-- Enviar imagens -->
+  <form method="post" enctype="multipart/form-data">
     {% csrf_token %}
     {{ form.as_p }}
+
+    <!-- Imagem Preview -->
+    <div class="mb-3">
+      <label for="id_imagem">Pré-visualização:</label><br>
+      <img id="preview-img" src="#" alt="Imagem selecionada" style="display: none; max-height: 200px; border: 1px solid #ccc; padding: 5px;">
+    </div>
+
     <button type="submit" class="btn btn-primary">Salvar</button>
   </form>
 </div>
+{% endblock %}
+
+{% block extra_scripts %}
+<script src="{% static 'js/preview.js' %}"></script>
 {% endblock %}

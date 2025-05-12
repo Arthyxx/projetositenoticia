@@ -7,40 +7,43 @@
 <div class="container-content">
 
   {% if destaque %}
-    <!-- Destaque Principal -->
-    <div class="destaque mb-5">
-      {% if destaque.imagem %}
-        <img src="{{ destaque.imagem.url }}" alt="Imagem da notícia destaque">
-      {% else %}
-        <img src="{% static 'images/sem-imagem.jpg' %}" alt="Imagem não disponível">
-      {% endif %}
-      <div class="destaque-text">
-        <h3>{{ destaque.titulo }}</h3>
-        <p>{{ destaque.descricao }}</p>
-        <a href="{% url 'noticia' destaque.id %}" class="btn btn-primary mt-2">Leia Mais</a>
+    <!-- Destaque Principal com título dentro da imagem -->
+    <div class="news-grid mb-5">
+      <div class="news-item">
+        <div class="card-noticia">
+          {% if destaque.imagem %}
+            <a href="{% url 'noticia' destaque.id %}" class="destaque-link">
+              <img src="{{ destaque.imagem.url }}" alt="Imagem da notícia">
+              <div class="titulo-noticia-destaque">{{ destaque.titulo }}</div>
+            </a>
+          {% else %}
+            <a href="{% url 'noticia' destaque.id %}" class="destaque-link">
+              <img src="{% static 'images/sem-imagem.jpg' %}" alt="Imagem não disponível">
+              <div class="titulo-noticia-destaque">{{ destaque.titulo }}</div>
+            </a>
+          {% endif %}
+        </div>
       </div>
     </div>
   {% endif %}
 
-  <!-- Lista de Notícias -->
-  <div class="news-grid">
-    {% for noticia in noticias %}
-      {% if not destaque or noticia.id != destaque.id %}
-        <div class="news-item">
-          <div class="card-noticia">
-            {% if noticia.imagem %}
-              <img src="{{ noticia.imagem.url }}" alt="Imagem da notícia">
-            {% else %}
-              <img src="{% static 'images/sem-imagem.jpg' %}" alt="Imagem não disponível">
-            {% endif %}
-            <div class="titulo-noticia">{{ noticia.titulo }}</div>
-            <div class="descricao-noticia">{{ noticia.descricao|truncatewords:15 }}</div>
-            <a href="{% url 'noticia' noticia.id %}" class="stretched-link"></a>
-          </div>
+  <!-- Lista de Notícias com layout simplificado -->
+  {% for noticia in noticias %}
+    {% if not destaque or noticia.id != destaque.id %}
+      <div class="d-flex align-items-start mb-4">
+        {% if noticia.imagem %}
+          <img src="{{ noticia.imagem.url }}" alt="Imagem" style="width: 120px; height: auto; margin-right: 15px;">
+        {% else %}
+          <img src="{% static 'images/sem-imagem.jpg' %}" alt="Imagem" style="width: 120px; height: auto; margin-right: 15px;">
+        {% endif %}
+        <div>
+          <h5><a href="{% url 'noticia' noticia.id %}">{{ noticia.titulo }}</a></h5>
+          <p>{{ noticia.descricao|truncatewords:20 }}</p>
+          <a href="{% url 'noticia' noticia.id %}">Leia mais</a>
         </div>
-      {% endif %}
-    {% endfor %}
-  </div>
+      </div>
+    {% endif %}
+  {% endfor %}
 
 </div>
 {% endblock %}
