@@ -56,6 +56,11 @@ a {
   margin: 1rem auto; 
 }
 
+.home-page .container-content { 
+  max-width: 600px; /* O valor que você deseja para a página inicial */
+  margin: 1rem auto; 
+}
+
 .destaque {
   background: #ffffff;
   padding: 1.5rem;
@@ -73,7 +78,7 @@ a {
 
 .destaque img {
   width: 100%;
-  height: auto;
+  height: 500px;
   object-fit: cover;
   border-radius: 6px;
 }
@@ -141,6 +146,59 @@ a {
   min-width: 250px;
 }
 
+/* Garantir que as imagens nas notícias não fiquem tão grandes */
+.news-item img {
+  width: 120px; /* Definir um tamanho fixo para as imagens das notícias */
+  height: auto; /* Manter a proporção da imagem */
+  margin-right: 15px; /* Ajustar o espaçamento entre a imagem e o texto */
+}
+
+/* Estilo para a notícia */
+.noticia-item {
+  display: flex;
+  align-items: flex-start;
+  margin-bottom: 1rem;
+  position: relative;
+  background-color: #fff; /* Cor de fundo branca */
+  border-radius: 10px; /* Bordas arredondadas */
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); /* Sombra suave */
+  overflow: hidden; /* Para garantir que a imagem e texto fiquem dentro das bordas */
+  padding: 15px; /* Espaçamento interno */
+  transition: box-shadow 0.3s ease; /* Transição suave para a sombra */
+}
+
+.noticia-item:hover {
+  box-shadow: 0 6px 15px rgba(0, 0, 0, 0.15); /* Sombra mais forte ao passar o mouse */
+}
+
+/* Estilo para a imagem da notícia */
+.imagem-noticia {
+  width: 120px;
+  height: auto;
+  margin-right: 15px;
+  transition: transform 0.3s ease;
+  border-radius: 5px; /* Bordas arredondadas nas imagens */
+}
+
+.noticia-item:hover .imagem-noticia {
+  transform: scale(1.1); /* Aumenta a imagem em 10% */
+}
+
+/* Estilo para o texto da notícia */
+.texto-noticia {
+  max-width: calc(100% - 135px); /* Ajusta para o espaço da imagem e o margin-right */
+}
+
+.texto-noticia h5 {
+  font-size: 1.25rem;
+  margin-bottom: 0.5rem;
+}
+
+.texto-noticia p {
+  font-size: 1rem;
+  color: #666;
+}
+
 .card-noticia {
   background: #fff;
   border: none;
@@ -180,6 +238,14 @@ a {
   font-size: 0.95rem;
   color: #555;
 }
+
+.noticia-completa .img-fluid {
+  max-width: 80%;  /* Ajuste conforme necessário */
+  height: auto;
+  margin: 0 auto;
+  display: block;
+}
+
 
 .edit-icon {
   position: absolute;

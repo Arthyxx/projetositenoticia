@@ -1,4 +1,5 @@
 {% extends "base.html" %}
+{% load static %}
 
 {% block title %}Categoria: {{ categoria|title }} - Sports News{% endblock %}
 
@@ -9,18 +10,19 @@
   <div class="news-grid">
     {% for noticia in noticias %}
       <div class="news-item">
-        <div class="card-noticia">
-          <!-- Exibir a imagem da notícia -->
-          <img src="{{ noticia.imagem_url }}" alt="{{ noticia.titulo }}">
+        <div class="noticia-item">
+          <!-- Exibir a imagem da notícia à esquerda -->
+          {% if noticia.imagem %}
+            <img src="{{ noticia.imagem.url }}" alt="{{ noticia.titulo }}" class="imagem-noticia">
+          {% else %}
+            <img src="{% static 'images/sem-imagem.jpg' %}" alt="Imagem" class="imagem-noticia">
+          {% endif %}
           
           <!-- Título da notícia com link para a página completa -->
-          <div class="titulo-noticia">
-            <a href="{% url 'noticia' noticia.pk %}">{{ noticia.titulo }}</a>
-          </div>
-          
-          <!-- Exibir somente uma parte da descrição (100 primeiros caracteres) -->
-          <div class="descricao-noticia">
-            {{ noticia.descricao|slice:":100" }}...
+          <div class="texto-noticia">
+            <h5><a href="{% url 'noticia' noticia.pk %}">{{ noticia.titulo }}</a></h5>
+            <p>{{ noticia.descricao|truncatewords:20 }}</p>
+            <a href="{% url 'noticia' noticia.pk %}">Leia mais</a>
           </div>
         </div>
       </div>
