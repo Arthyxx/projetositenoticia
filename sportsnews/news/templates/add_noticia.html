@@ -4,22 +4,74 @@
 
 {% block content %}
 <div class="container mt-5">
-  <h2>Adicionar Nova Notícia</h2>
-  <form method="post" enctype="multipart/form-data">
+  <h2>Adicionar Notícia</h2>
+  <form method="POST" enctype="multipart/form-data" action="{% url 'add_noticia' %}">
     {% csrf_token %}
+    
     {{ form.as_p }}
 
-    <!-- Imagem Preview -->
-    <div class="mb-3">
-      <label for="id_imagem">Pré-visualização:</label><br>
-      <img id="preview-img" src="#" alt="Imagem selecionada" style="display: none; max-height: 200px; border: 1px solid #ccc; padding: 5px;">
+    {% if form.errors %}
+    <div class="alert alert-danger">
+      {{ form.errors }}
+    </div>
+    {% endif %}
+
+    <h4>Conteúdos da Notícia</h4>
+
+    {{ formset.management_form }}
+
+    {% if formset.non_form_errors %}
+    <div class="alert alert-danger">
+      {{ formset.non_form_errors }}
+    </div>
+    {% endif %}
+
+    <div id="conteudo-formset">
+      {% for form in formset %}
+      <div class="conteudo-bloco border p-3 mb-3 {% if not forloop.first %}d-none{% endif %}">
+        {% if form.errors %}
+        <div class="alert alert-danger">
+          {{ form.errors }}
+        </div>
+        {% endif %}
+
+        <label>Tipo:</label>
+        {{ form.tipo }}
+
+        <div class="campo-ordem mt-2">
+          <label for="{{ form.ordem.id_for_label }}">Ordem:</label>
+          {{ form.ordem }}
+        </div>
+
+        <div class="campo-texto mt-2" style="display:none;">
+          {{ form.texto }}
+        </div>
+
+        <div class="campo-imagem mt-2" style="display:none;">
+          {{ form.imagem }}
+          <img class="preview-img mt-2" src="#" alt="Preview da imagem" style="display:none; max-width: 200px; max-height: 200px;" />
+        </div>
+
+        <div class="campo-video mt-2" style="display:none;">
+          {{ form.video_url }}
+        </div>
+
+        {% if form.DELETE %}
+        <div class="form-check mt-2">
+          {{ form.DELETE }} <label class="form-check-label">Excluir este conteúdo</label>
+        </div>
+        {% endif %}
+      </div>
+      {% endfor %}
     </div>
 
-    <button type="submit" class="btn btn-primary">Salvar</button>
+    <button type="button" id="add-conteudo-btn" class="btn btn-secondary mb-3">+ Adicionar mais um parágrafo</button>
+
+    <button type="submit" class="btn btn-success">Adicionar Notícia</button>
   </form>
 </div>
 {% endblock %}
 
 {% block extra_scripts %}
-<script src="{% static 'js/preview.js' %}"></script>
+<script src="{% static 'js/tipo_conteudo.js' %}"></script>
 {% endblock %}
