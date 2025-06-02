@@ -2,7 +2,6 @@ from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth import authenticate, login
 from django.contrib.auth.decorators import login_required
 from django.forms import inlineformset_factory
-from django.forms import modelformset_factory
 
 from .models import Noticia, ConteudoNoticia
 from .forms import NoticiaForm, ConteudoNoticiaForm
@@ -17,11 +16,11 @@ ConteudoFormSet = inlineformset_factory(
 )
 
 def home(request):
-    destaque = Noticia.objects.filter(destaque=True).first()
+    destaques = Noticia.objects.filter(destaque=True).order_by('-data_publicacao')
     noticias = Noticia.objects.all()
     categorias = Noticia.categoria_choices
     return render(request, 'home.html', {
-        'destaque': destaque,
+        'destaques': destaques,
         'noticias': noticias,
         'categorias': categorias
     })
@@ -53,41 +52,18 @@ def admin_dashboard(request):
     return render(request, 'admin_dashboard.html', {'noticias': noticias})
 
 @login_required(login_url='/login')
-def add_noticia(request):
-    ConteudoFormSet = inlineformset_factory(
-        Noticia,
-        ConteudoNoticia,
-        form=ConteudoNoticiaForm,
-        extra=1,
-        can_delete=True
-    )
-    
-    if request.method == 'POST':
-        form = NoticiaForm(request.POST, request.FILES)
-        
-        if form.is_valid():
-            noticia = form.save(commit=False)
-            
-            # Criar o formset com a instância noticia ainda não salva para validação dos conteudos
-            formset = ConteudoFormSet(request.POST, request.FILES, instance=noticia, prefix='conteudo')
-            
-            if formset.is_valid():
-                # Salva a notícia
-                noticia.save()
-                # Salva o formset já ligado à notícia
-                formset.save()
-                return redirect('home')
-            else:
-                print("ConteudoFormSet errors:", formset.errors)
-        else:
-            print("NoticiaForm errors:", form.errors)
-            formset = ConteudoFormSet(request.POST, request.FILES, prefix='conteudo')
-    else:
-        form = NoticiaForm()
-        formset = ConteudoFormSet(prefix='conteudo')
-    
-    return render(request, 'add_noticia.html', {'form': form, 'formset': formset})
+def destacar_noticia(request, pk):
+    noticia = get_object_or_404(Noticia, pk=pk)
+    noticia.destaque = True
+    noticia.save()
+    return redirect('admin_dashboard')
 
+@login_required(login_url='/login')
+def remover_destaque(request, pk):
+    noticia = get_object_or_404(Noticia, pk=pk)
+    noticia.destaque = False
+    noticia.save()
+    return redirect('admin_dashboard')
 
 @login_required(login_url='/login')
 def editar_noticia(request, pk):
@@ -105,9 +81,6 @@ def editar_noticia(request, pk):
         form = NoticiaForm(request.POST, request.FILES, instance=noticia)
         formset = ConteudoFormSet(request.POST, request.FILES, instance=noticia, prefix='conteudo')
 
-        print("NoticiaForm errors:", form.errors)
-        print("ConteudoFormSet errors:", formset.errors)
-
         if form.is_valid() and formset.is_valid():
             form.save()
             formset.save()
@@ -119,17 +92,20 @@ def editar_noticia(request, pk):
     return render(request, 'editar_noticia.html', {'form': form, 'formset': formset})
 
 @login_required(login_url='/login')
+def add_noticia(request):
+    if request.method == 'POST':
+        form = NoticiaForm(request.POST, request.FILES)  # Recebe os dados do formulário e arquivos
+        if form.is_valid():
+            form.save()  # Salva a nova notícia
+            return redirect('admin_dashboard')  # Redireciona para o painel de administração
+    else:
+        form = NoticiaForm()  # Se for GET, cria um formulário vazio
+    return render(request, 'add_noticia.html', {'form': form})  # Retorna o template com o formulário
+
+@login_required(login_url='/login')
 def excluir_noticia(request, pk):
     noticia = get_object_or_404(Noticia, pk=pk)
     if request.method == 'POST':
-        noticia.delete()
-        return redirect('admin_dashboard')
-    return render(request, 'excluir_noticia.html', {'noticia': noticia})
-
-@login_required(login_url='/login')
-def destacar_noticia(request, pk):
-    Noticia.objects.update(destaque=False)
-    noticia = get_object_or_404(Noticia, pk=pk)
-    noticia.destaque = True
-    noticia.save()
-    return redirect('admin_dashboard')
+        noticia.delete()  # Deleta a notícia do banco de dados
+        return redirect('admin_dashboard')  # Redireciona para o painel de administração
+    return render(request, 'excluir_noticia.html', {'noticia': noticia})  # Exibe o template para confirmar a exclusão

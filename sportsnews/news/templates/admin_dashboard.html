@@ -20,7 +20,9 @@
             {% endif %}
           </div>
           <div>
-            {% if not noticia.destaque %}
+            {% if noticia.destaque %}
+              <a href="{% url 'remover_destaque' noticia.id %}" class="btn btn-sm btn-warning">Remover do destaque</a>
+            {% else %}
               <a href="{% url 'destacar_noticia' noticia.id %}" class="btn btn-sm btn-info">Destacar</a>
             {% endif %}
             <a href="{% url 'editar_noticia' noticia.id %}" class="btn btn-sm btn-warning">Editar</a>

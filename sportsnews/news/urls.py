@@ -16,6 +16,10 @@ urlpatterns = [
     path('excluir/<int:pk>/', views.excluir_noticia, name='excluir_noticia'),  # Ajuste de id para pk
     path('noticia/<int:pk>/', views.noticia, name='noticia'),  # Rota para página de notícia completa
     path('destacar/<int:pk>/', views.destacar_noticia, name='destacar_noticia'),
+    path('remover_destaque/<int:pk>/', views.remover_destaque, name='remover_destaque'),  # Nova rota
+    path('add/', views.add_noticia, name='add_noticia'),
+    path('excluir/<int:pk>/', views.excluir_noticia, name='excluir_noticia'),
+
 ]
 
 if settings.DEBUG:
