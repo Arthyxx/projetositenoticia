@@ -21,12 +21,19 @@ REM Aplicar migrações
 echo Aplicando migrações...
 python manage.py migrate
 
+REM Voltar para a pasta raiz (onde está o .bat) para rodar o script do superusuário
+cd ..
+
 REM Criar superusuário se não existir
 echo Verificando/criando superusuário...
-python create_superuser.py
+python sportsnews\sportsnews\create_superuser.py
+
+REM Voltar novamente para a pasta do projeto
+cd sportsnews
 
 REM Rodar o servidor
 echo Iniciando o servidor...
 python manage.py runserver
 
 ENDLOCAL
+pause
