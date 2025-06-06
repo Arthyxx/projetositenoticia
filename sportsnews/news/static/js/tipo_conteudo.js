@@ -67,7 +67,8 @@ document.addEventListener('DOMContentLoaded', function() {
     let total = parseInt(totalForms.value);
     if (total >= 100) return;
 
-    let novoBloco = blocos[0].cloneNode(true);
+   let primeiroBloco = formsetDiv.querySelector('.conteudo-bloco');
+   let novoBloco = primeiroBloco.cloneNode(true);
 
     novoBloco.querySelectorAll('input, select, textarea').forEach(el => {
       if (el.type === 'checkbox' || el.type === 'radio') {

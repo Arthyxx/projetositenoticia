@@ -93,14 +93,31 @@ def editar_noticia(request, pk):
 
 @login_required(login_url='/login')
 def add_noticia(request):
+    ConteudoFormSet = inlineformset_factory(
+        Noticia,
+        ConteudoNoticia,
+        form=ConteudoNoticiaForm,
+        extra=1,
+        can_delete=True
+    )
+
     if request.method == 'POST':
-        form = NoticiaForm(request.POST, request.FILES)  # Recebe os dados do formulário e arquivos
-        if form.is_valid():
-            form.save()  # Salva a nova notícia
-            return redirect('admin_dashboard')  # Redireciona para o painel de administração
+        form = NoticiaForm(request.POST, request.FILES)
+        formset = ConteudoFormSet(request.POST, request.FILES, prefix='conteudo')
+
+        if form.is_valid() and formset.is_valid():
+            noticia = form.save()
+            formset.instance = noticia
+            formset.save()
+            return redirect('admin_dashboard')
     else:
-        form = NoticiaForm()  # Se for GET, cria um formulário vazio
-    return render(request, 'add_noticia.html', {'form': form})  # Retorna o template com o formulário
+        form = NoticiaForm()
+        formset = ConteudoFormSet(prefix='conteudo')
+
+    return render(request, 'add_noticia.html', {
+        'form': form,
+        'formset': formset
+    })
 
 @login_required(login_url='/login')
 def excluir_noticia(request, pk):
