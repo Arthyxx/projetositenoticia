@@ -1,33 +1,35 @@
 {% extends "base.html" %}
 {% load static %}
 
-{% block title %}Categoria: {{ categoria|title }} - Sports News{% endblock %}
+{% block title %}
+  Categoria: {{ categoria|default:"Geral"|title }} - {{ site_title|default:"Sports News" }}
+{% endblock %}
 
 {% block content %}
 <div class="container-content">
-  <h1>Notícias de {{ categoria|title }}</h1>
+  <h1 class="titulo-categoria">Notícias de {{ categoria|default:"Geral"|title }}</h1>
 
   <div class="news-grid">
     {% for noticia in noticias %}
       <div class="news-item">
         <div class="noticia-item">
-          <!-- Exibir a imagem da notícia à esquerda -->
           {% if noticia.imagem %}
             <img src="{{ noticia.imagem.url }}" alt="{{ noticia.titulo }}" class="imagem-noticia">
           {% else %}
-            <img src="{% static 'images/sem-imagem.jpg' %}" alt="Imagem" class="imagem-noticia">
+            <img src="{% static 'images/sem-imagem.jpg' %}" alt="Sem imagem" class="imagem-noticia">
           {% endif %}
-          
-          <!-- Título da notícia com link para a página completa -->
+
           <div class="texto-noticia">
-            <h5><a href="{% url 'noticia' noticia.pk %}">{{ noticia.titulo }}</a></h5>
+            <h5>
+              <a href="{% url 'noticia' noticia.pk %}">{{ noticia.titulo }}</a>
+            </h5>
             <p>{{ noticia.descricao|truncatewords:20 }}</p>
             <a href="{% url 'noticia' noticia.pk %}">Leia mais</a>
           </div>
         </div>
       </div>
     {% empty %}
-      <p>Nenhuma notícia disponível nesta categoria.</p>
+      <p class="sem-noticia">Nenhuma notícia disponível nesta categoria.</p>
     {% endfor %}
   </div>
 </div>

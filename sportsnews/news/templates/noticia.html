@@ -4,25 +4,32 @@
 
 {% block content %}
 <div class="container-content">
-  <div class="noticia-completa">
-    <h2>{{ noticia.titulo }}</h2>
+  <div class="noticia-completa bg-white p-4 rounded shadow-sm">
+
+    <h2 class="mb-3">{{ noticia.titulo }}</h2>
 
     {% if noticia.imagem %}
-      <img src="{{ noticia.imagem.url }}" alt="Imagem da notícia" class="img-fluid mb-3">
+      <img src="{{ noticia.imagem.url }}" alt="Imagem principal da notícia" class="img-fluid mb-4 mx-auto d-block rounded">
     {% endif %}
 
     <p><strong>Categoria:</strong> {{ noticia.categoria|capfirst }}</p>
     <p><strong>Publicado em:</strong> {{ noticia.data_publicacao|date:"d/m/Y H:i" }}</p>
 
-    <div class="descricao">
+    <div class="descricao mt-4">
       {% for bloco in conteudos %}
         {% if bloco.tipo == 'texto' and bloco.texto %}
           <p>{{ bloco.texto|linebreaksbr }}</p>
         {% elif bloco.tipo == 'imagem' and bloco.imagem %}
-          <img src="{{ bloco.imagem.url }}" alt="Imagem da notícia" class="img-fluid mb-3">
+          <img src="{{ bloco.imagem.url }}" alt="Imagem complementar" class="img-fluid mb-3 mx-auto d-block rounded">
         {% elif bloco.tipo == 'video' and bloco.video_url %}
-          <div class="video-container mb-3">
-            <iframe width="560" height="315" src="{{ bloco.video_url }}" frameborder="0" allowfullscreen></iframe>
+          <div class="video-container mb-4">
+            <iframe 
+              src="{{ bloco.video_url }}" 
+              title="Vídeo relacionado à notícia"
+              frameborder="0" 
+              allowfullscreen
+              style="width:100%; height:100%; position:absolute; top:0; left:0;">
+            </iframe>
           </div>
         {% endif %}
       {% empty %}
@@ -30,7 +37,7 @@
       {% endfor %}
     </div>
 
-    <a href="{% url 'categoria' noticia.categoria %}" class="btn btn-primary mt-3">Voltar à Categoria</a>
+    <a href="{% url 'categoria' noticia.categoria %}" class="btn btn-primary mt-4">Voltar à Categoria</a>
   </div>
 </div>
 {% endblock %}
