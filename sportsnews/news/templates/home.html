@@ -14,9 +14,9 @@
         {% for noticia in destaques %}
         <div class="carousel-item {% if forloop.first %}active{% endif %}">
           {% if noticia.imagem %}
-          <img src="{{ noticia.imagem.url }}" class="d-block w-100" alt="{{ noticia.titulo }}">
+          <img src="{{ noticia.imagem.url }}" class="d-block w-100 carousel-img" alt="{{ noticia.titulo }}">
           {% else %}
-          <img src="{% static 'images/sem-imagem.jpg' %}" class="d-block w-100" alt="Imagem não disponível">
+          <img src="{% static 'images/sem-imagem.jpg' %}" class="d-block w-100 carousel-img" alt="Imagem não disponível">
           {% endif %}
           <div class="carousel-caption bg-dark bg-opacity-50 rounded p-2">
             <h5>{{ noticia.titulo }}</h5>
@@ -45,7 +45,11 @@
         <div class="card-noticia">
           {% if noticia.imagem %}
             <a href="{% url 'noticia' noticia.id %}">
-              <img src="{{ noticia.imagem.url }}" alt="{{ noticia.titulo }}">
+              <img src="{{ noticia.imagem.url }}" alt="{{ noticia.titulo }}" class="card-img">
+            </a>
+          {% else %}
+            <a href="{% url 'noticia' noticia.id %}">
+              <img src="{% static 'images/sem-imagem.jpg' %}" alt="Sem imagem" class="card-img">
             </a>
           {% endif %}
           <div class="text">
