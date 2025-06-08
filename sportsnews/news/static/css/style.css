@@ -65,29 +65,25 @@ a {
   margin: 1rem auto;
 }
 
-.divider {
-  margin: 2rem 0;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  position: relative;
-}
+/* Ajuste para a navbar e seus itens */
+@media (max-width: 767px) {
+  .navbar {
+    display: flex;
+    flex-direction: column; /* Alinha os itens verticalmente */
+    align-items: stretch; /* Garante que os itens ocupem toda a largura */
+  }
 
-.divider::before,
-.divider::after {
-  content: '';
-  flex: 1;
-  height: 1px;
-  background: #d44133;
-}
+  .nav-link {
+    text-align: center; /* Centraliza os links */
+    padding: 10px 0; /* Espaçamento interno adequado para mobile */
+  }
 
-.divider span {
-  padding: 0 1rem;
-  font-weight: bold;
-  color: #e74c3c;
-  background: #f0f2f5;
-  z-index: 1;
-  white-space: nowrap;
+  .nav-divider {
+    border-top: 3px solid #e74c3c; /* Faz a barra horizontal */
+    width: 100%; /* Barra ocupando a tela inteira */
+    height: 3px; /* Ajusta a altura da barra */
+    margin: 10px 0; /* Ajusta o espaçamento entre os itens */
+  }
 }
 
 /* Carrossel */
