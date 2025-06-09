@@ -6,7 +6,7 @@ from django.forms import inlineformset_factory
 from .models import Noticia, ConteudoNoticia
 from .forms import NoticiaForm, ConteudoNoticiaForm
 
-# InlineFormSet: melhor forma de gerenciar ConteudoNoticia relacionado à Noticia
+# InlineFormSet -> Gerenciar dinamicamente
 ConteudoFormSet = inlineformset_factory(
     Noticia,
     ConteudoNoticia,
@@ -31,7 +31,7 @@ def categoria(request, categoria):
 
 def noticia(request, pk):
     noticia = get_object_or_404(Noticia, pk=pk)
-    conteudos = noticia.conteudos.order_by('ordem')  # garante ordem correta dos blocos
+    conteudos = noticia.conteudos.order_by('ordem')
     return render(request, 'noticia.html', {'noticia': noticia, 'conteudos': conteudos})
 
 def login_view(request):
@@ -84,7 +84,7 @@ def editar_noticia(request, pk):
         if form.is_valid() and formset.is_valid():
             form.save()
             formset.save()
-            return redirect('home')
+            return redirect('admin_dashboard')
     else:
         form = NoticiaForm(instance=noticia)
         formset = ConteudoFormSet(instance=noticia, prefix='conteudo')
@@ -123,6 +123,6 @@ def add_noticia(request):
 def excluir_noticia(request, pk):
     noticia = get_object_or_404(Noticia, pk=pk)
     if request.method == 'POST':
-        noticia.delete()  # Deleta a notícia do banco de dados
-        return redirect('admin_dashboard')  # Redireciona para o painel de administração
-    return render(request, 'excluir_noticia.html', {'noticia': noticia})  # Exibe o template para confirmar a exclusão
+        noticia.delete()
+        return redirect('admin_dashboard')
+    return render(request, 'excluir_noticia.html', {'noticia': noticia})

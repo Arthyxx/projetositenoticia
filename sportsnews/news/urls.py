@@ -12,11 +12,11 @@ urlpatterns = [
     path('logout/', auth_views.LogoutView.as_view(), name='logout'),
     path('admin-dashboard/', views.admin_dashboard, name='admin_dashboard'),
     path('add/', views.add_noticia, name='add_noticia'),
-    path('editar/<int:pk>/', views.editar_noticia, name='editar_noticia'),  # Ajuste de id para pk
-    path('excluir/<int:pk>/', views.excluir_noticia, name='excluir_noticia'),  # Ajuste de id para pk
-    path('noticia/<int:pk>/', views.noticia, name='noticia'),  # Rota para página de notícia completa
+    path('editar/<int:pk>/', views.editar_noticia, name='editar_noticia'),
+    path('excluir/<int:pk>/', views.excluir_noticia, name='excluir_noticia'),
+    path('noticia/<int:pk>/', views.noticia, name='noticia'),
     path('destacar/<int:pk>/', views.destacar_noticia, name='destacar_noticia'),
-    path('remover_destaque/<int:pk>/', views.remover_destaque, name='remover_destaque'),  # Nova rota
+    path('remover_destaque/<int:pk>/', views.remover_destaque, name='remover_destaque'),
     path('add/', views.add_noticia, name='add_noticia'),
     path('excluir/<int:pk>/', views.excluir_noticia, name='excluir_noticia'),
 
