@@ -11,21 +11,19 @@
 
   <div class="news-grid">
     {% for noticia in noticias %}
-      <div class="news-item">
-        <div class="noticia-item">
-          {% if noticia.imagem %}
-            <img src="{{ noticia.imagem.url }}" alt="{{ noticia.titulo }}" class="imagem-noticia">
-          {% else %}
-            <img src="{% static 'images/sem-imagem.jpg' %}" alt="Sem imagem" class="imagem-noticia">
-          {% endif %}
+      <div class="card-noticia-horizontal">
+        {% if noticia.imagem %}
+          <img src="{{ noticia.imagem.url }}" alt="{{ noticia.titulo }}">
+        {% else %}
+          <img src="{% static 'images/sem-imagem.jpg' %}" alt="Sem imagem">
+        {% endif %}
 
-          <div class="texto-noticia">
-            <h5>
-              <a href="{% url 'noticia' noticia.pk %}">{{ noticia.titulo }}</a>
-            </h5>
-            <p>{{ noticia.descricao|truncatewords:20 }}</p>
-            <a href="{% url 'noticia' noticia.pk %}">Leia mais</a>
-          </div>
+        <div class="conteudo-noticia">
+          <h5 class="titulo-noticia">
+            <a href="{% url 'noticia' noticia.pk %}">{{ noticia.titulo }}</a>
+          </h5>
+          <p class="descricao-noticia">{{ noticia.descricao|truncatewords:25 }}</p>
+          <a class="btn btn-outline-primary btn-sm mt-2" href="{% url 'noticia' noticia.pk %}">Leia mais</a>
         </div>
       </div>
     {% empty %}
