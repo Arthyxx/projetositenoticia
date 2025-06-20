@@ -1,0 +1,34 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}
+  Categoria: {{ categoria|default:"Geral"|title }} - {{ site_title|default:"Sports News" }}
+{% endblock %}
+
+{% block content %}
+<div class="container-content">
+  <h1 class="titulo-categoria">Notícias de {{ categoria|default:"Geral"|title }}</h1>
+
+  <div class="news-grid">
+    {% for noticia in noticias %}
+      <div class="card-noticia-horizontal">
+        {% if noticia.imagem %}
+          <img src="{{ noticia.imagem.url }}" alt="{{ noticia.titulo }}">
+        {% else %}
+          <img src="{% static 'images/sem-imagem.jpg' %}" alt="Sem imagem">
+        {% endif %}
+
+        <div class="conteudo-noticia">
+          <h5 class="titulo-noticia">
+            <a href="{% url 'noticia' noticia.pk %}">{{ noticia.titulo }}</a>
+          </h5>
+          <p class="descricao-noticia">{{ noticia.descricao|truncatewords:25 }}</p>
+          <a class="btn btn-outline-primary btn-sm mt-2" href="{% url 'noticia' noticia.pk %}">Leia mais</a>
+        </div>
+      </div>
+    {% empty %}
+      <p class="sem-noticia">Nenhuma notícia disponível nesta categoria.</p>
+    {% endfor %}
+  </div>
+</div>
+{% endblock %}
