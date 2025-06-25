@@ -15,7 +15,7 @@
 - D[jango 5.2.1]([url](https://www.djangoproject.com/))
 - [Pillow 11.2.1]([url](https://pillow.readthedocs.io/en/stable/))
 - [SQLParse]([url](https://pypi.org/project/sqlparse/))  
-- [Tzdata]([url](https://pypi.org/project/tzdata/))
+- [Tzdata]((https://pypi.org/project/tzdata/))
 
 ## Como rodar
 
