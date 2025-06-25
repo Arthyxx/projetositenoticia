@@ -11,11 +11,11 @@
 
 ## Tecnologias
 
-- Python 3  
-- Django 5.2.1  
-- Pillow  
-- SQLParse  
-- Tzdata
+- [Python 3]([url](https://www.python.org/))
+- D[jango 5.2.1]([url](https://www.djangoproject.com/))
+- [Pillow 11.2.1]([url](https://pillow.readthedocs.io/en/stable/))
+- [SQLParse]([url](https://pypi.org/project/sqlparse/))  
+- [Tzdata]([url](https://pypi.org/project/tzdata/))
 
 ## Como rodar
 
