@@ -11,12 +11,12 @@
 
 ## Tecnologias
 
-- [Python 3]([url](https://www.python.org/))
-- D[jango 5.2.1]([url](https://www.djangoproject.com/))
-- [Pillow 11.2.1]([url](https://pillow.readthedocs.io/en/stable/))
-- [SQLParse]([url](https://pypi.org/project/sqlparse/))  
-- [Tzdata]((https://pypi.org/project/tzdata/))
-
+- [Python 3](https://www.python.org/)
+- [Django 5.2.1](https://www.djangoproject.com/)
+- [Pillow 11.2.1](https://pillow.readthedocs.io/en/stable/)
+- [SQLParse](https://pypi.org/project/sqlparse/)
+- [Tzdata](https://pypi.org/project/tzdata/)
+  
 ## Como rodar
 
 ### Usando `.bat`
