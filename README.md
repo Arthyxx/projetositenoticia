@@ -1,36 +1,37 @@
 # Red Zone
 
-**Red Zone** é um site de notícias sobre esportes americanos, focado em futebol americano, basquete, baseball e hóquei.
+**Red Zone** is a sports news website focused on American sports, including American football, basketball, baseball, and hockey.
 
-## Funcionalidades
+## Features
 
-- Notícias por categoria  
-- Upload de imagens  
-- Painel administrativo via Django Admin  
-- Design responsivo
+- News organized by category  
+- Image upload support  
+- Administrative panel via Django Admin  
+- Responsive design  
 
-## Tecnologias
+## Technologies
 
 - [Python 3](https://www.python.org/)
 - [Django 5.2.1](https://www.djangoproject.com/)
 - [Pillow 11.2.1](https://pillow.readthedocs.io/en/stable/)
 - [SQLParse](https://pypi.org/project/sqlparse/)
 - [Tzdata](https://pypi.org/project/tzdata/)
-  
-## Como rodar
 
-### Usando `.bat`
+## How to Run
 
-Clique duas vezes em **`iniciar_servidor.bat`** para rodar o servidor local.  
-O site abrirá em `http://127.0.0.1:8000/`.
+### Using `.bat`
 
-Use o atalho **`Redzone ADM.url`** para acessar o admin direto:  
+Double-click **`iniciar_servidor.bat`** to start the local server.  
+The website will be available at:  
+`http://127.0.0.1:8000/`
+
+Use the shortcut **`Redzone ADM.url`** to access the admin panel directly:  
 `http://127.0.0.1:8000/login/?next=/admin-dashboard/`
 
-### Manual
+### Manual Setup
 
 ```bash
-git clone https://github.com/SEU-USUARIO/redzone.git
+git clone https://github.com/YOUR-USERNAME/redzone.git
 cd redzone
 python -m venv venv
 source venv/bin/activate  # Windows: venv\Scripts\activate
@@ -38,25 +39,25 @@ pip install -r requirements.txt
 python manage.py migrate
 python manage.py createsuperuser
 python manage.py runserver
-```
 
-## Uso
+## Usage
 
-Acesse `http://127.0.0.1:8000/` e navegue pelas categorias.
+Access `http://127.0.0.1:8000/` and browse the news categories.
 
-Administração via `http://127.0.0.1:8000/admin` ou atalho indicado.
+Administration is available at:  
+`http://127.0.0.1:8000/admin` or via the provided shortcut.
 
-## Equipe
+## Team
 
 - Antonio Israel  
 - Arthur Gonçalves  
 - Gabriel Miranda  
 - Jonas Rego  
 - Roberto Talysson  
-- Suan Eden
+- Suan Eden  
 
-Curso: Desenvolvimento Web em HTML, CSS, JavaScript e PHP — Estácio
+Course: Web Development with HTML, CSS, JavaScript, and PHP — Estácio
 
-## Licença
+## License
 
-Licença MIT.
+MIT License.
